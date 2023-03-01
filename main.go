@@ -1,16 +1,22 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	"log"
 	"os"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
-	http.HandleFunc("/", handler)
-	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
-}
+	app := fiber.New()
+	app.Get("/", func(c*fiber.Ctx) error {
+		return c.sendString("Yo")
+	})
+	port := os.Getenv("PORT")
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello World!")
+	if port == {
+		port = "3000"
+	}
+
+	log.Fatal(app.Listen("0.0.0.0:" + port))
 }
